@@ -1,3 +1,6 @@
+
+veuiller executer: docker-compose up --build
+
 Dans ce projet, j'ai essayé de créer une application qui se connecte à une base de données MySQL nommée gestion_user (les informations sur la base de données se trouvent dans le fichier BD.txt, situé à l'extérieur de ce document).
 
 Cette application donne la possibilité à chaque personne de créer un compte, de lister les utilisateurs inscrits dans la base, de se connecter et de quitter.
