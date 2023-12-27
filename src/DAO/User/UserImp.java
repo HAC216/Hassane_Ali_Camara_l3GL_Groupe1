@@ -7,7 +7,6 @@ import Entities.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -168,23 +167,27 @@ public class UserImp implements IUser
         try {
             //retoune l'id du role
             resultSet = bdConnection.statement.executeQuery("SELECT id from role where UPPER(SUBSTRING(nom, 1, 4))='"+"USER"+"'");
-            resultSet.next();
-            user.setId(resultSet.getInt(1));
-            //Instruction sql qui permettra d'inserer un user dans la bd
-            String insertQuery = "INSERT INTO user (id, email, password, passwordHashed) VALUES (?, ?, ?, ?)";
 
-            try (PreparedStatement preparedStatement = bdConnection.connection.prepareStatement(insertQuery)) {
-                preparedStatement.setInt(1, user.getId());
-                preparedStatement.setString(2, user.getEmail());
-                preparedStatement.setString(3, user.getPassword());
-                preparedStatement.setString(4, user.getPasswordHashed());
+            if(!resultSet.isBeforeFirst())
+            {
 
-                // l'exécution de l'instruction insertQuery (Insertion des informations de user)
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println(e);
+                //Instruction sql qui permettra d'inserer un user dans la bd
+                String insertQuery = "INSERT INTO role (nom) VALUES ('" + "User" + "')";
+                //l'excecution de l'instruction inserTQuery(Insertion des informations de user)
+                bdConnection.statement.executeUpdate(insertQuery);
+
+
             }
 
+                resultSet.close();
+                //retoune l'id du role
+                resultSet = bdConnection.statement.executeQuery("SELECT id from role where UPPER(SUBSTRING(nom, 1, 4))='"+"USER"+"'");
+                resultSet.next();
+                user.setId(resultSet.getInt(1));
+                //Instruction sql qui permettra d'inserer un user dans la bd
+                String insertQuery = "INSERT INTO user (id,email, password, passwordHashed) VALUES (" + user.getId() + ",'" + user.getEmail() + "', '" + user.getPassword() + "', '" + user.getPasswordHashed() + "')";
+                //l'excecution de l'instruction inserTQuery(Insertion des informations de user)
+                bdConnection.statement.executeUpdate(insertQuery);
 
 
         } catch (SQLException e) {
