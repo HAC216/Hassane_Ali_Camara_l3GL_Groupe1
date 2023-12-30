@@ -1,3 +1,4 @@
+Utilisation de l'app sans docker creer une basse de donner local grace au fichier BD.txt et dans le fichier BdConnection.java remplacer mysql-1:3306 par localhost.
 
 veuiller executer: docker-compose up --build
 
