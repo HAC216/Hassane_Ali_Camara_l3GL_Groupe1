@@ -1,4 +1,4 @@
-package Entities;
+package main.java.Entities;
 
 import java.sql.SQLException;
 import java.sql.Connection;
@@ -13,16 +13,10 @@ public class BdConnection {
     public Connection connection;
 
     {
-
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // Utilisez le nom du service (nom du conteneur) comme hôte
             connection = DriverManager.getConnection("jdbc:mysql://mysql-1:3306/gestion_user", "root", "");
-
         } catch (SQLException e) {
             System.out.println(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 
